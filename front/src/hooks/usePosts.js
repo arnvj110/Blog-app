@@ -20,7 +20,7 @@ export function useCreatePost() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ title, content }) => createPost({title, content}),
+    mutationFn: (data) => createPost(data),
     onSuccess: () => {
       qc.invalidateQueries(["posts"]);
     },onError: (error) => {

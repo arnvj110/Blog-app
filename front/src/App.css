@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +39,26 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+body{
+  
+background-color: #0f172a;
+
+}
+/* For inline code */
+.markdown-preview code {
+  background: #1e1e1e;
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid #444;
+}
+
+/* For big fenced code blocks ``` */
+.markdown-preview pre {
+  background: #1e1e1e !important;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  overflow-x: auto;
 }

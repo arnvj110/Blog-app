@@ -2,10 +2,13 @@ import { z } from "zod";
 
 export const createPostSchema = z.object({
   title: z.string().min(3),
-  content: z.string().min(10)
+  content: z.string().min(10),
+  coverImg: z.string().url().optional(),
+
 });
 
 export const updatePostSchema = z.object({
   title: z.string().min(3).optional(),
   content: z.string().min(10).optional(),
+  coverImg: z.string().url().optional(),
 });

@@ -1,7 +1,8 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {login, signup, getMe} from "../api/auth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -10,17 +11,19 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
-
-  // Fetch current user only if token exists
+  
+  
   const { data: user, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: getMe,
     enabled: !!token,
     retry: false,
+    
     onError: () => {
-      // invalid token -> logout
+      
       localStorage.removeItem("token");
       queryClient.removeQueries(["user"]);
+      
     }
   });
 
@@ -29,8 +32,9 @@ export const AuthProvider = ({ children }) => {
     mutationFn: ({ email, password }) => login({email, password}),
     onSuccess: (data) => {
       localStorage.setItem("token", data.token);
-      queryClient.invalidateQueries(["user"]); // refetch user
-      navigate("/"); // redirect to homepage
+      queryClient.invalidateQueries(["user"]); 
+      toast.success("Logged in successfully!");
+      navigate("/"); 
     }
   });
 
@@ -38,7 +42,10 @@ export const AuthProvider = ({ children }) => {
   const registerMutation = useMutation({
     mutationFn: (info) =>
       signup(info),
-    onSuccess: () => navigate("/login")
+    onSuccess: () => {
+      toast.success("Registered successfully!");
+      navigate("/login")
+    }
   });
 
   // LOGOUT
@@ -47,6 +54,7 @@ export const AuthProvider = ({ children }) => {
     queryClient.removeQueries(["user"]);
     navigate("/login");
   };
+
 
   return (
     <AuthContext.Provider

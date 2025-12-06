@@ -7,7 +7,10 @@ import Signup from "./pages/Register";
 import { AuthProvider } from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
-import ViewPost from "./components/ViewPost";
+import ViewPost from "./pages/ViewPost";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import "./App.css";
 
 const client = new QueryClient();
 
@@ -19,7 +22,12 @@ export default function App() {
           <Navbar /> 
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/create" element={<CreatePost />} />
+            <Route path="/create" element={
+              <ProtectedRoute>
+                  <CreatePost/>
+
+                </ProtectedRoute>
+              } />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Signup />} />
             <Route path="/posts/:id" element={<ViewPost />} />

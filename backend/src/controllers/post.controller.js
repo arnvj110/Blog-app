@@ -4,10 +4,8 @@ import UserProfile from "../models/user.model.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, coverImg } = req.body;
     
-
-    const html = marked(content);
 
     const author_id = await UserProfile.findOne({ supabase_id: req.user.id });
     
@@ -15,7 +13,7 @@ export const createPost = async (req, res) => {
     const post = await Post.create({
       title,
       content,
-      html,
+      coverImg,
       author_id : author_id._id,
     });
 
@@ -37,10 +35,6 @@ export const getPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const fields = req.body;
-
-  if (fields.content) {
-    fields.html = marked(fields.content);
-  }
 
   const post = await Post.findOneAndUpdate(
     { _id: req.params.id, author_id: req.user.id },

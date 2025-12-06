@@ -7,12 +7,13 @@ const Post = new mongoose.Schema({
     content: {
         type: String, required: true
     },
-    html: {
+    coverImg: {
         type: String
     },
     author_id: {
         type: String, required: true
     },
+    
 
 }, { timestamps: true });
 
