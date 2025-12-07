@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { IoIosLogOut } from "react-icons/io";
+
+import { LogOut, X } from "lucide-react";
 
 const Navbar = () => {
   const { user, isLoggedIn, logout } = useAuth();
@@ -34,13 +35,13 @@ const Navbar = () => {
               Create Post
             </Link>
             {isLoggedIn &&
-            <Link
-              to="/myposts"
-              className="px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-lg transition-all duration-200"
-            >
-              My Posts
-            </Link>
-}
+              <Link
+                to="/myposts"
+                className="px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700/50 rounded-lg transition-all duration-200"
+              >
+                My Posts
+              </Link>
+            }
 
             {!isLoggedIn && (
               <>
@@ -65,7 +66,7 @@ const Navbar = () => {
                   onClick={() => setMenuOpen(!menuOpen)}
                   className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-gray-700/50 hover:bg-gray-700 transition-all duration-200 border border-gray-600"
                 >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm ">
                     {user?.username?.[0]?.toUpperCase() || "U"}
                   </div>
                   <span className="text-gray-200 font-medium">{user?.username || "User"}</span>
@@ -75,8 +76,8 @@ const Navbar = () => {
                 </button>
                 {menuOpen && (
                   <div className="absolute right-0 mt-2 w-56 bg-gray-800 rounded-lg shadow-2xl py-2 z-50 border border-gray-700 ">
-                    
-                    
+
+
                     <button
                       onClick={() => {
                         setMenuOpen(false);
@@ -84,10 +85,9 @@ const Navbar = () => {
                       }}
                       className="flex items-center w-full text-left px-4 py-3 text-gray-300 hover:text-red-400 hover:bg-gray-700/70  cursor-pointer gap-2"
                     >
-                      {/* <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                      </svg> */}
-                      <IoIosLogOut size={20} />
+
+
+                      <LogOut size={24} />
                       Logout
                     </button>
                   </div>
@@ -109,6 +109,7 @@ const Navbar = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 )}
               </svg>
+
             </button>
           </div>
         </div>
@@ -157,7 +158,7 @@ const Navbar = () => {
                 </div>
                 <span className="text-gray-200 font-medium">{user?.username || "User"}</span>
               </div>
-              
+
               <button
                 onClick={() => {
                   logout();

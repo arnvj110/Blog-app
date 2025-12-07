@@ -15,6 +15,7 @@ export const createPost = async (req, res) => {
       content,
       coverImg,
       author_id : author_id._id,
+      author : author_id.username
     });
 
     res.json(post);
@@ -24,11 +25,34 @@ export const createPost = async (req, res) => {
 };
 
 export const getPosts = async (req, res) => {
-  const posts = await Post.find().sort({ created_at: -1 });
-  res.json(posts);
+  try {
+    const search = req.query.search || ""; 
+    
+
+     let filter = {};
+
+    if (search) {
+      filter = {
+        $or: [
+          { title: { $regex: search, $options: "i" } },
+          { content: { $regex: search, $options: "i" } },
+          { author: { $regex: search, $options: "i" } },
+        ],
+      };
+    }
+
+    const posts = await Post.find(filter).sort({ created_at: -1 });
+
+    res.json(posts);
+    
+    
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  } 
 };
 
 export const getPost = async (req, res) => {
+  console.log(req.params.id);
   const post = await Post.findById(req.params.id);
   res.json(post);
 };
@@ -53,3 +77,18 @@ export const deletePost = async (req, res) => {
 
   res.json({ success: true });
 };
+
+// export const searchPosts = async (req, res) => {
+//   try {
+//     const query = req.params.query; 
+//     const posts = await Post.find({
+//       $or: [
+//         { title: { $regex: query, $options: 'i' } },
+//         { content: { $regex: query, $options: 'i' } }
+//       ]
+//     }).sort({ created_at: -1 });  
+//     res.json(posts);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   } 
+// };

@@ -1,7 +1,8 @@
 import { api } from "./client";
 
-export const getPosts = async () => {
-  const { data } = await api.get("/posts");
+export const getPosts = async (search) => {
+  const { data } = await api.get(`/posts/?search=${search}`);
+  
   return data;
 };
 
@@ -19,3 +20,9 @@ export const updatePost = async ({ id, ...post }) => {
   const { data } = await api.put(`/posts/${id}`, post);
   return data;
 };
+
+export const deletePost = async (id) => {
+  const { data } = await api.delete(`/posts/${id}`);
+  return data;
+};
+

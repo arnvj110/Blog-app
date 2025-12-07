@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { getPosts, getPost, createPost } from "../api/posts";
+import { getPosts, getPost, createPost, deletePost } from "../api/posts";
 
-export function usePosts() {
+export function usePosts(search="") {
   return useQuery({
-    queryKey: ["posts"],
-    queryFn: getPosts,
+    queryKey: ["posts", search],
+    queryFn: () => getPosts(search),
+    keepPreviousData: true,
   });
 }
 
@@ -25,6 +26,18 @@ export function useCreatePost() {
       qc.invalidateQueries(["posts"]);
     },onError: (error) => {
       console.error("Error creating post:", error);
+    }
+  });
+}
+
+export function useDeletePost(id) {
+  const qc = useQueryClient();  
+  return useMutation({
+    mutationFn: () => deletePost(id),
+    onSuccess: () => {
+      qc.invalidateQueries(["posts"]);
+    },onError: (error) => {
+      console.error("Error deleting post:", error);
     }
   });
 }

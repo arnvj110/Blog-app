@@ -6,6 +6,7 @@ import {
   createPost,
   getPosts,
   getPost,
+  
   updatePost,
   deletePost,
 } from "../controllers/post.controller.js";
@@ -14,6 +15,8 @@ const router = express.Router();
 
 router.get("/", getPosts);
 router.get("/:id", getPost);
+
+// router.get("/search/:query", searchPosts);
 
 router.post("/", auth, validate(createPostSchema), createPost);
 router.put("/:id", auth, validate(updatePostSchema), updatePost);

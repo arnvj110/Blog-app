@@ -13,7 +13,9 @@ const Post = new mongoose.Schema({
     author_id: {
         type: String, required: true
     },
-    
+    author: {
+        type: String
+    }
 
 }, { timestamps: true });
 
